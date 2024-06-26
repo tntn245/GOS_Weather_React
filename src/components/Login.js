@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+// import jwtDecode from 'jwt-decode';
+import axios from "axios";
 
+const clientID = "198859900939-5p29gi0fanquhrl4pmd23vh6v7b56fbt.apps.googleusercontent.com";
+  
 function Login({ onLogin }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/login', {
+      const response = await axios.post("http://localhost:5000/login", {
         username,
-        password
+        password,
       });
       onLogin(response.data.access_token);
     } catch (error) {
-      setError('Invalid username or password');
+      setError("Invalid username or password");
     }
   };
 
   return (
     <div>
-      <h2>Login</h2>
+      {/* <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -37,7 +41,19 @@ function Login({ onLogin }) {
         />
         <button type="submit">Login</button>
       </form>
-      {error && <p>{error}</p>}
+      {error && <p>{error}</p>} */}
+
+        <GoogleLogin
+        onSuccess={credentialResponse => {
+            // const decoded = jwtDecode(credentialResponse?.credential);
+            // console.log(decoded);
+            console.log(credentialResponse);
+
+        }}
+        onError={() => {
+            console.log('Login Failed');
+        }}
+        />
     </div>
   );
 }
