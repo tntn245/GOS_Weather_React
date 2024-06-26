@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
-// import jwtDecode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import axios from "axios";
 
 const clientID = "198859900939-5p29gi0fanquhrl4pmd23vh6v7b56fbt.apps.googleusercontent.com";
@@ -43,17 +43,18 @@ function Login({ onLogin }) {
       </form>
       {error && <p>{error}</p>} */}
 
-        <GoogleLogin
-        onSuccess={credentialResponse => {
-            // const decoded = jwtDecode(credentialResponse?.credential);
-            // console.log(decoded);
-            console.log(credentialResponse);
+        <GoogleOAuthProvider clientId="826103606588-eqe5jffn43d1ge68f63bcnr1dld44lun.apps.googleusercontent.com">
+            <GoogleLogin
+            onSuccess={credentialResponse => {
+                const decoded = jwtDecode(credentialResponse?.credential);
+                console.log(decoded);
+            }}
+            onError={() => {
+                console.log('Login Failed');
+            }}
+            />
+        </GoogleOAuthProvider>
 
-        }}
-        onError={() => {
-            console.log('Login Failed');
-        }}
-        />
     </div>
   );
 }

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from 'jwt-decode';
-import axios from "axios";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Login from './components/Login';
+import Dashboard from './components/Dashboard';
 import './App.css';
 
 function App() {
@@ -15,15 +15,10 @@ function App() {
 
   return (
       <div className="App">
-        <GoogleLogin
-        onSuccess={credentialResponse => {
-            const decoded = jwtDecode(credentialResponse.credential);
-            console.log(decoded);
-        }}
-        onError={() => {
-            console.log('Login Failed');
-        }}
-        />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
       </div>
     );
   }
