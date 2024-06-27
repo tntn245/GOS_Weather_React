@@ -5,9 +5,23 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color:#E3F2FD; 
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.App {
+  display: grid;
+  grid-template-rows: auto 1fr; /* Header và Content chiếm phần đầu và phần còn lại của trang */
+  height: 100vh; /* Chiều cao ứng dụng chiếm toàn màn hình */
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.login h2 {
+  margin-bottom: 20px;
 }

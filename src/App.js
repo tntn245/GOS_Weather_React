@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import './App.css';
+import Register from './components/Register';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
@@ -17,6 +18,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
