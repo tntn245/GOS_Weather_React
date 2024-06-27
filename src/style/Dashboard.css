@@ -110,13 +110,40 @@ body {
   gap: 10px;
 }
 
-.info-box {
+
+.info-container {
   background-color: #5372F0;
   color: white;
   padding: 10px;
   border-radius: 4px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
   height: 150px; 
 }
+
+.info-box {
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 0;
+  text-align: left;
+}
+
+.info-box h3 {
+  margin: 0;
+}
+
+.additional-info {
+  color: white;
+  border-radius: 4px;
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
 
 .days-label {
   text-align: center;

@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import axios from "../api/axios.js";
-
-const clientID =
-  "198859900939-5p29gi0fanquhrl4pmd23vh6v7b56fbt.apps.googleusercontent.com";
-const clientSecret = "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";
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -30,25 +25,27 @@ function Login({ onLogin }) {
       const data = await response.json();
 
       if (response.status === 200) {
-        setMessage(data.message); // Thông báo đăng nhập thành công
+        onLogin(data.access_token);
         navigate('/dashboard')
-        // Thực hiện hành động sau khi đăng nhập thành công (ví dụ: chuyển hướng trang)
       } else {
-        setMessage(data.message); // Thông báo lỗi đăng nhập
+        setMessage(data.message);
       }
+
     } catch (error) {
       console.error('Error:', error);
       setMessage('An error occurred. Please try again.');
     }
   };
-
+  
   const handleGoogleLoginSuccess = (credentialResponse) => {
     const token = credentialResponse?.credential;
     if (token) {
       axios
-        .post("http://localhost:5000/google-login")
+        .post("http://localhost:5000/google-login", { token })
         .then((response) => {
-          console.log(response.data);
+          const jwtToken = response.data.access_token;
+          onLogin(jwtToken);  // Lưu JWT vào localStorage
+          navigate('/dashboard');
         })
         .catch((error) => {
           console.error("Error fetching data:", error);

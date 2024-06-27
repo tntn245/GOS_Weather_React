@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import React, { useState } from "react";
 import "../style/Dashboard.css";
 
-const Dashboard = () => {
-  const [city, setCity] = useState('');
+const Dashboard = ({ onLogout }) => {
+  const [position, setPosition] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [error, setError] = useState(null);
 
   const fetchWeatherData = async (city) => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/submit_form', {
-        method: 'POST',
+      const response = await fetch("http://127.0.0.1:5000/submit_form", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ city }),
       });
@@ -20,25 +21,44 @@ const Dashboard = () => {
       setWeatherData(data.weather_data);
       setForecastData(data.forecast_data);
     } catch (error) {
-      console.error('Error fetching weather data:', error);
+      console.error("Error fetching weather data:", error);
     }
   };
 
   const handleSearch = () => {
-    if (city) {
-      fetchWeatherData(city);
+    if (position) {
+      fetchWeatherData(position);
     }
   };
 
   const handleUseCurrentLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        const { latitude, longitude } = position.coords;
-        fetchWeatherData(`${latitude},${longitude}`);
-      });
+    if (!navigator.geolocation) {
+      setError("Geolocation is not supported by your browser");
     } else {
-      alert('Geolocation is not supported by this browser.');
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          });
+          setPosition(
+            position.coords.latitude + ", " + position.coords.longitude
+          );
+          fetchWeatherData(
+            position.coords.latitude + ", " + position.coords.longitude
+          );
+        },
+        (error) => {
+          setError(`Error: ${error.message}`);
+        }
+      );
     }
+  };
+
+  const handleSubcribe = () => {
+  };
+
+  const handleUnsubcribe = () => {
   };
 
   return (
@@ -51,33 +71,52 @@ const Dashboard = () => {
             <input
               type="text"
               placeholder="Enter something..."
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
+              value={position}
+              onChange={(e) => setPosition(e.target.value)}
             />
             <button onClick={handleSearch}>Search</button>
           </div>
+
+          <div className="subcribe-container">
+            <button onClick={handleSubcribe}>Subcribe</button>
+            <button onClick={handleUnsubcribe}>Unsubcribe</button>
+          </div>
+
           <div className="divider">
             <span className="divider-text">or</span>
           </div>
           <button className="another-button" onClick={handleUseCurrentLocation}>
             Use current location
           </button>
+          {location && (
+            <div>
+              <h3>Your Current Location:</h3>
+              <p>Latitude: {location.latitude}</p>
+              <p>Longitude: {location.longitude}</p>
+            </div>
+          )}
+          {error && <p>{error}</p>}
         </div>
 
         <div className="right-side">
-          <div className="info-box">
+          <div class="info-container">
             {weatherData ? (
               <>
-                <h3>{weatherData.location.country}</h3>
-                <p>Temperature: {weatherData.current.temp_c} &#8451;</p>
-                <p>Wind speed: {weatherData.current.wind_kph} KM/H</p>
-                <p>Humidity: {weatherData.current.humidity} %</p>
-                <p>{weatherData.current.condition.text}</p>
+                <div className="info-box">
+                  <h3>{weatherData.location.country}</h3>
+                  <p>Temperature: {weatherData.current.temp_c} &#8451;</p>
+                  <p>Wind speed: {weatherData.current.wind_kph} KM/H</p>
+                  <p>Humidity: {weatherData.current.humidity} %</p>
+                </div>
+                <div class="additional-info">
+                  <p>{weatherData.current.condition.text}</p>
+                </div>
               </>
             ) : (
               <p>No data</p>
             )}
           </div>
+
           <div className="days-label">4 Day Forecast</div>
           <div className="four-columns">
             {forecastData &&
@@ -93,6 +132,8 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <button onClick={onLogout}>Logout</button>
+
     </div>
   );
 };
