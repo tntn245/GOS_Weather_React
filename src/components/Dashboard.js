@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import "../style/Dashboard.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt, faBell } from "@fortawesome/free-solid-svg-icons";
 import ProgressBar from "./ProgressBar";
 import Header from "./Header";
+import Modal from "react-modal";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Dashboard = ({ userID, onLogout }) => {
   const [loading, setLoading] = useState(false);
@@ -89,13 +89,12 @@ const Dashboard = ({ userID, onLogout }) => {
       console.error("Error subscribing:", error.message);
     } finally {
       setLoading(false);
+      alert("You will receive daily weather emails at 7 AM")
     }
   };
 
   return (
     <div>
-      <ProgressBar loading={loading} />
-
       <Header userID={userID} onLogout={onLogout} />
 
       <div className="content">
@@ -141,16 +140,16 @@ const Dashboard = ({ userID, onLogout }) => {
                   <p>Humidity: {weatherData.current.humidity} %</p>
                 </div>
                 <div className="additional-info">
-                <div>
-                  <div className="info-row">
-                    <img
-                      src={weatherData.current.condition.icon}
-                      alt="Weather Icon"
-                    />
-                  </div>
-                  <div className="info-row">
-                    <p>{weatherData.current.condition.text}</p>
-                  </div>
+                  <div>
+                    <div className="info-row">
+                      <img
+                        src={weatherData.current.condition.icon}
+                        alt="Weather Icon"
+                      />
+                    </div>
+                    <div className="info-row">
+                      <p>{weatherData.current.condition.text}</p>
+                    </div>
                   </div>
                 </div>
               </>
@@ -184,6 +183,37 @@ const Dashboard = ({ userID, onLogout }) => {
           </div>
         </div>
       </div>
+
+      {/* Must write inner! */}
+      <Modal
+        isOpen={loading}
+        onRequestClose={() => setLoading(false)}
+        contentLabel="Loading Modal"
+        className="loading-modal"
+        style={{
+          position: "relative",
+        }}
+      >
+        <div className="loader-container"
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <ClipLoader
+            color={"#5372F0"}
+            loading={loading}
+            cssOverride={{
+              display: "block",
+              margin: "0 auto",
+            }}
+            size={100}
+            aria-label="Loading Spinner"
+          />
+        </div>
+      </Modal>
     </div>
   );
 };

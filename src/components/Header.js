@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../style/Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt, faBell, faClose } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSignOutAlt,
+  faBell,
+  faClose,
+} from "@fortawesome/free-solid-svg-icons";
 import Modal from "react-modal";
 
 const Header = ({ userID, onLogout }) => {
@@ -39,15 +43,15 @@ const Header = ({ userID, onLogout }) => {
     fetch("https://weatherweb-1s99.onrender.com/unsubscribe", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify({ userID: userID, position: position })
+      body: JSON.stringify({ userID: userID, position: position }),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         fetchUserSubscriptions();
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error unsubscribing:", error);
       });
   };
@@ -85,16 +89,25 @@ const Header = ({ userID, onLogout }) => {
           </div>
         </div>
       </header>
-      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={{
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+          },
+          content: {
+            backgroundColor: "#fff",
+          },
+        }}
+      >
         <div className="modal-header">
-          <h2 className="modal-text">Modal Content</h2>
+          <h2 className="modal-text">Subscribed Locations</h2>
           <button className="close-button" onClick={closeModal}>
-          <FontAwesomeIcon
-                      icon={faClose}
-                    />
+            <FontAwesomeIcon icon={faClose} />
           </button>
         </div>
-        
+
         <div className="modal-content">
           {isLoading ? (
             <p>Loading...</p>
@@ -103,7 +116,7 @@ const Header = ({ userID, onLogout }) => {
               {positions.map((position, index) => (
                 <div key={index} className="subscription-item">
                   <input type="text" disabled value={position} />
-                  <button onClick={() => handleUnsubscribe(position)}>
+                  <button className="unsubscribe-btn" onClick={() => handleUnsubscribe(position)}>
                     Unsubscribe
                   </button>
                 </div>

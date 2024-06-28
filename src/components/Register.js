@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Modal from "react-modal";
+import ClipLoader from "react-spinners/ClipLoader";
 import "../style/Register.css";
 
 function Register() {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -26,6 +29,7 @@ function Register() {
     setOTPInput("");
     setMessage("");
     setShowOTPInput(false);
+    setLoading(true);
 
     if (!passwordMatch) {
       return;
@@ -52,10 +56,13 @@ function Register() {
     } catch (error) {
       console.error("Error:", error);
       setMessage("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleVerifyOTP = async () => {
+    setLoading(true);
     try {
       const response = await fetch(
         "https://weatherweb-1s99.onrender.com/verifyOTP",
@@ -74,6 +81,8 @@ function Register() {
     } catch (error) {
       console.error("Error:", error);
       setMessage("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -140,6 +149,38 @@ function Register() {
           Back to Login
         </button>
       </div>
+
+      {/* Must write inner! */}
+      <Modal
+        isOpen={loading}
+        onRequestClose={() => setLoading(false)}
+        contentLabel="Loading Modal"
+        className="loading-modal"
+        style={{
+          position: "relative",
+        }}
+      >
+        <div
+          className="loader-container"
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <ClipLoader
+            color={"#5372F0"}
+            loading={loading}
+            cssOverride={{
+              display: "block",
+              margin: "0 auto",
+            }}
+            size={100}
+            aria-label="Loading Spinner"
+          />
+        </div>
+      </Modal>
     </div>
   );
 }

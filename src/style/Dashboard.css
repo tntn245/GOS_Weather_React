@@ -1,9 +1,11 @@
-h3, h4, p {
+h3,
+h4,
+p {
   margin-top: 8px;
   margin-bottom: 8px;
 }
 
-.spinner{
+.spinner {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,21 +19,21 @@ body {
 
 .dashboard {
   display: grid;
-  grid-template-rows: auto 1fr; 
-  height: 100vh; 
+  grid-template-rows: auto 1fr;
+  height: 100vh;
 }
 
 .content {
   display: grid;
-  background-color:#E3F2FD; 
-  grid-template-columns: 3.5fr 6.5fr; 
-  gap: 10px; 
+  background-color: #e3f2fd;
+  grid-template-columns: 3.5fr 6.5fr;
+  gap: 10px;
   padding: 15px;
   height: 90%;
 }
 
 .left-side {
-  background-color:#E3F2FD; 
+  background-color: #e3f2fd;
   padding: 15px;
   display: flex;
   flex-direction: column;
@@ -40,13 +42,13 @@ body {
 
 .input-container {
   width: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .input-container p {
   margin: 0;
   margin-bottom: 10px;
-  font-weight: bold; 
+  font-weight: bold;
   text-align: left;
 }
 
@@ -54,24 +56,25 @@ body {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #6C757D;
+  border: 1px solid #6c757d;
   border-radius: 4px;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .input-container button {
   width: 100%;
   padding: 10px;
-  background-color: #5372F0;
+  background-color: #5372f0;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
-.input-container button[disabled], .subscribe[disabled] {
-  background-color: #b0bec5; 
+.input-container button[disabled],
+.subscribe[disabled] {
+  background-color: #b0bec5;
   color: #666;
   cursor: not-allowed;
 }
@@ -79,7 +82,7 @@ body {
 .subscribe-container {
   margin: 10px 0;
   width: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -88,12 +91,12 @@ body {
 .subscribe {
   width: 100%;
   padding: 10px;
-  background-color: #5372F0;
+  background-color: #5372f0;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .divider {
@@ -118,32 +121,31 @@ body {
 .another-button {
   width: 100%;
   padding: 10px;
-  background-color: #6C757D;
+  background-color: #6c757d;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .right-side {
-  background-color:#E3F2FD;
+  background-color: #e3f2fd;
   padding: 15px;
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-
 .info-container {
-  background-color: #5372F0;
+  background-color: #5372f0;
   color: white;
   padding: 10px;
   border-radius: 4px;
   display: flex;
   flex-direction: row;
   gap: 10px;
-  height: 150px; 
+  height: 150px;
   justify-content: center;
   align-items: center;
 }
@@ -183,19 +185,37 @@ body {
   text-align: center;
   font-size: 20px;
   margin: 10px 0;
-  font-weight: bold; 
+  font-weight: bold;
   text-align: left;
 }
 
 .four-columns {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); 
-  gap: 24px; 
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
 }
 
 .column-box {
   color: #fff;
-  background-color: #6C757D; 
+  background-color: #6c757d;
   border-radius: 4px;
   padding: 10px;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.loading-modal {
+  display: "flex";
+  justify-content: "center";
+  align-items: "center";
+}
+
+.loader {
+  display: "block";
+  margin: "0 auto"
 }
