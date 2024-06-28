@@ -1,9 +1,7 @@
 .header {
-  background-color: #007bff; /* Màu nền của header */
-  color: #fff; /* Màu chữ */
-  padding: 10px 20px; /* Khoảng cách padding */
-
-  /* Căn giữa nội dung của header */
+  background-color: #5372F0; 
+  color: #fff;
+  padding: 10px 20px;
   display: flex;
   justify-content: center;
 }
@@ -12,7 +10,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%; /* Đảm bảo header-content chiếm toàn bộ chiều rộng của header */
+  width: 100%; 
 }
 
 .left,
@@ -24,19 +22,36 @@
 
 .center {
   justify-content: center;
-  flex-grow: 1; /* Chiếm hết không gian còn lại */
+  flex-grow: 1; 
 }
 
 .icon {
-  font-size: 1.5rem; /* Kích thước icon */
-  cursor: pointer; /* Đổi con trỏ khi hover vào icon */
-  margin: 0 10px; /* Khoảng cách giữa icon và nội dung xung quanh */
+  font-size: 1.5rem; 
+  cursor: pointer; 
+  margin: 0 10px;
 }
 
 .modal-header {
   display: flex;
-  align-items: center; /* Canh giữa dọc */
+  justify-content: space-between; /* Để các phần tử nằm ở hai đầu của flex container */
+  align-items: center; /* Căn giữa theo chiều dọc */
 }
+
+.modal-text {
+  flex: 1; /* Cho phần tử này mở rộng theo phần còn lại của flex container */
+  text-align: center; /* Căn giữa nội dung ngang */
+}
+
+.close-button {
+  background-color: #fff;
+  padding: 10px 20px;
+  color: #000000;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+}
+
 
 .modal-content {
   display: flex;
@@ -47,15 +62,16 @@
 .subscription-item {
   width: 100%;
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .modal-content input {
-  width: 80%;
+  width: 85%;
   padding: 10px;
-  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  flex: 1;
 }
 
 .modal-content button {

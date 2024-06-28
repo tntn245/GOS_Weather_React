@@ -1,0 +1,60 @@
+.register-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .register-form input{
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #6C757D;
+    border-radius: 4px;
+    box-sizing: border-box; 
+  }
+  
+  .register-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5372F0;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-sizing: border-box; 
+}
+.otp-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.otp-input {
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #6C757D;
+  border-radius: 4px;
+  box-sizing: border-box; 
+}
+
+.otp-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #5372F0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-sizing: border-box; 
+}

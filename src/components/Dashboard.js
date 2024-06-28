@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../style/Dashboard.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt, faBell } from '@fortawesome/free-solid-svg-icons'; 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt, faBell } from "@fortawesome/free-solid-svg-icons";
 import ProgressBar from "./ProgressBar";
 import Header from "./Header";
 
@@ -92,13 +92,11 @@ const Dashboard = ({ userID, onLogout }) => {
     }
   };
 
-  const handleUnsubcribe = () => {};
-
   return (
     <div>
       <ProgressBar loading={loading} />
-      
-      <Header userID={userID} onLogout={onLogout}/>
+
+      <Header userID={userID} onLogout={onLogout} />
 
       <div className="content">
         <div className="left-side">
@@ -109,18 +107,10 @@ const Dashboard = ({ userID, onLogout }) => {
               placeholder="Enter position"
               value={position}
               onChange={(e) => setPosition(e.target.value)}
+              required
             />
             <button onClick={handleSearch} disabled={!position.trim()}>
               Search
-            </button>
-          </div>
-
-          <div className="subscribe-container">
-            <button className="subscribe" onClick={handleSubscribe}>
-              Subcribe
-            </button>
-            <button className="unsubscribe" onClick={handleUnsubcribe}>
-              Unsubcribe
             </button>
           </div>
 
@@ -150,8 +140,18 @@ const Dashboard = ({ userID, onLogout }) => {
                   <p>Wind speed: {weatherData.current.wind_kph} KM/H</p>
                   <p>Humidity: {weatherData.current.humidity} %</p>
                 </div>
-                <div class="additional-info">
-                  <p>{weatherData.current.condition.text}</p>
+                <div className="additional-info">
+                <div>
+                  <div className="info-row">
+                    <img
+                      src={weatherData.current.condition.icon}
+                      alt="Weather Icon"
+                    />
+                  </div>
+                  <div className="info-row">
+                    <p>{weatherData.current.condition.text}</p>
+                  </div>
+                  </div>
                 </div>
               </>
             ) : (
@@ -165,12 +165,22 @@ const Dashboard = ({ userID, onLogout }) => {
               forecastData.forecast.forecastday.slice(1).map((day) => (
                 <div className="column-box" key={day.date}>
                   <h4>({day.date})</h4>
-                  <p>{day.day.condition.text}</p>
+                  <img src={day.day.condition.icon} alt="Weather Icon" />
                   <p>Temp: {day.day.avgtemp_c} &#8451;</p>
                   <p>Max Wind: {day.day.maxwind_kph} KM/H</p>
                   <p>Humidity: {day.day.avghumidity} %</p>
                 </div>
               ))}
+          </div>
+
+          <div className="subscribe-container">
+            <button
+              className="subscribe"
+              onClick={handleSubscribe}
+              disabled={!forecastData}
+            >
+              Subscribe
+            </button>
           </div>
         </div>
       </div>

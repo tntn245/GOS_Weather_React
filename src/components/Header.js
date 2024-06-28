@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../style/Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOutAlt, faBell } from "@fortawesome/free-solid-svg-icons";
+import { faSignOutAlt, faBell, faClose } from "@fortawesome/free-solid-svg-icons";
 import Modal from "react-modal";
 
 const Header = ({ userID, onLogout }) => {
@@ -87,9 +87,14 @@ const Header = ({ userID, onLogout }) => {
       </header>
       <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
         <div className="modal-header">
-          <h2>Modal Content</h2>
-          <button onClick={closeModal}>Close Modal</button>
+          <h2 className="modal-text">Modal Content</h2>
+          <button className="close-button" onClick={closeModal}>
+          <FontAwesomeIcon
+                      icon={faClose}
+                    />
+          </button>
         </div>
+        
         <div className="modal-content">
           {isLoading ? (
             <p>Loading...</p>

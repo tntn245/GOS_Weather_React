@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "../style/Register.css";
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -71,8 +72,8 @@ function Register() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleRegister}>
+    <div className="register-container">
+      <form onSubmit={handleRegister} className="register-form">
         <input
           type="email"
           placeholder="Enter your email"
@@ -93,7 +94,7 @@ function Register() {
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
           required
-          style={{ borderColor: passwordMatch ? 'black' : 'red' }} 
+          style={{ borderColor: passwordMatch ? '' : 'red' }} 
         />
         <button type="submit">Register</button>
       </form>
@@ -102,18 +103,22 @@ function Register() {
       
       {/* Hiển thị OTP input nếu gửi OTP thành công */}
       {showOTPInput && (
-        <div>
-          <input
+        <div className="otp-container">
+          <input className='otp-input'
             type="text"
             placeholder="Enter OTP"
             value={OTPInput}
             onChange={(e) => setOTPInput(e.target.value)}
             required
           />
-          <button onClick={handleVerifyOTP}>Verify OTP</button>
+          <button onClick={handleVerifyOTP} className="otp-button">Verify OTP</button>
         </div>
       )}
-    </div>
+
+      <Link to="/">Back to Login</Link>
+
+      </div>
+
   );
 }
 

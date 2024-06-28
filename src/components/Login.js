@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import axios from "../api/axios.js";
+import "../style/Login.css";
 
 function Login({ onLogin }) {
   const [email, setEmail] = useState('');
@@ -54,8 +55,8 @@ function Login({ onLogin }) {
   };
 
   return (
-    <div>
-    <form onSubmit={handleLogin}>
+    <div className="login-container">
+    <form onSubmit={handleLogin} className="login-form">
         <input
           type="email"
           placeholder="Enter your email"
@@ -72,16 +73,20 @@ function Login({ onLogin }) {
         />
         <button type="submit">Login</button>
       </form>
-      {message && <p>{message}</p>}
+      <Link to="/register">Register</Link>
 
-      <GoogleOAuthProvider clientId="826103606588-eqe5jffn43d1ge68f63bcnr1dld44lun.apps.googleusercontent.com">
+      <div>
+       <p>{message}</p>
+       </div>
+
+      {/* <GoogleOAuthProvider clientId="826103606588-eqe5jffn43d1ge68f63bcnr1dld44lun.apps.googleusercontent.com">
         <GoogleLogin
           onSuccess={handleGoogleLoginSuccess}
           onError={() => {
             console.log("Login Failed");
           }}
         />
-      </GoogleOAuthProvider>
+      </GoogleOAuthProvider> */}
     </div>
   );
 }
