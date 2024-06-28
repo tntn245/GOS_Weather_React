@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/GOS_Weather_React/static/css/main.b5bd6cbe.css",
-    "main.js": "/GOS_Weather_React/static/js/main.856e9bc5.js",
+    "main.css": "/GOS_Weather_React/static/css/main.62c2cbf2.css",
+    "main.js": "/GOS_Weather_React/static/js/main.052b4ef8.js",
     "index.html": "/GOS_Weather_React/index.html",
-    "main.b5bd6cbe.css.map": "/GOS_Weather_React/static/css/main.b5bd6cbe.css.map",
-    "main.856e9bc5.js.map": "/GOS_Weather_React/static/js/main.856e9bc5.js.map"
+    "main.62c2cbf2.css.map": "/GOS_Weather_React/static/css/main.62c2cbf2.css.map",
+    "main.052b4ef8.js.map": "/GOS_Weather_React/static/js/main.052b4ef8.js.map"
   },
   "entrypoints": [
-    "static/css/main.b5bd6cbe.css",
-    "static/js/main.856e9bc5.js"
+    "static/css/main.62c2cbf2.css",
+    "static/js/main.052b4ef8.js"
   ]
 }
