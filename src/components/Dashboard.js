@@ -1,27 +1,38 @@
 import React, { useState } from "react";
 import "../style/Dashboard.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt, faBell } from '@fortawesome/free-solid-svg-icons'; 
+import ProgressBar from "./ProgressBar";
+import Header from "./Header";
 
-const Dashboard = ({ onLogout }) => {
+const Dashboard = ({ userID, onLogout }) => {
+  const [loading, setLoading] = useState(false);
   const [position, setPosition] = useState("");
   const [weatherData, setWeatherData] = useState(null);
   const [forecastData, setForecastData] = useState(null);
   const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
 
-  const fetchWeatherData = async (city) => {
+  const fetchWeatherData = async (position) => {
+    setLoading(true);
     try {
-      const response = await fetch("http://127.0.0.1:5000/submit_form", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ city }),
-      });
+      const response = await fetch(
+        "https://weatherweb-1s99.onrender.com/submit_form",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ position }),
+        }
+      );
       const data = await response.json();
       setWeatherData(data.weather_data);
       setForecastData(data.forecast_data);
     } catch (error) {
       console.error("Error fetching weather data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -44,9 +55,6 @@ const Dashboard = ({ onLogout }) => {
           setPosition(
             position.coords.latitude + ", " + position.coords.longitude
           );
-          fetchWeatherData(
-            position.coords.latitude + ", " + position.coords.longitude
-          );
         },
         (error) => {
           setError(`Error: ${error.message}`);
@@ -55,31 +63,65 @@ const Dashboard = ({ onLogout }) => {
     }
   };
 
-  const handleSubcribe = () => {
+  const handleSubscribe = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        "https://weatherweb-1s99.onrender.com/subscribe",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ position, userID }),
+        }
+      );
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      console.log("Subscription successful");
+    } catch (error) {
+      console.error("Error subscribing:", error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const handleUnsubcribe = () => {
-  };
+  const handleUnsubcribe = () => {};
 
   return (
     <div>
-      <header className="header">Weather Dashboard</header>
+      <ProgressBar loading={loading} />
+      
+      <Header userID={userID} onLogout={onLogout}/>
+
       <div className="content">
         <div className="left-side">
           <div className="input-container">
             <p>Enter a City Name</p>
             <input
               type="text"
-              placeholder="Enter something..."
+              placeholder="Enter position"
               value={position}
               onChange={(e) => setPosition(e.target.value)}
             />
-            <button onClick={handleSearch}>Search</button>
+            <button onClick={handleSearch} disabled={!position.trim()}>
+              Search
+            </button>
           </div>
 
-          <div className="subcribe-container">
-            <button onClick={handleSubcribe}>Subcribe</button>
-            <button onClick={handleUnsubcribe}>Unsubcribe</button>
+          <div className="subscribe-container">
+            <button className="subscribe" onClick={handleSubscribe}>
+              Subcribe
+            </button>
+            <button className="unsubscribe" onClick={handleUnsubcribe}>
+              Unsubcribe
+            </button>
           </div>
 
           <div className="divider">
@@ -132,8 +174,6 @@ const Dashboard = ({ onLogout }) => {
           </div>
         </div>
       </div>
-      <button onClick={onLogout}>Logout</button>
-
     </div>
   );
 };

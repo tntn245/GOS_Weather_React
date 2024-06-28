@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import {jwtDecode} from 'jwt-decode'
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Register from './components/Register';
@@ -8,26 +9,35 @@ import PublicRoute from './route/PublicRoute';
 import './App.css';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const [userID, setUserID] = useState(null); 
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      setIsLoggedIn(true);
-      navigate('/dashboard');
+      try {
+        const decodedToken = jwtDecode(token);
+        const currentTime = Date.now() / 1000;
+        if (decodedToken.exp > currentTime) {
+          setUserID(decodedToken.sub); // Lấy user ID từ JWT
+          navigate('/dashboard');
+        } else {
+          localStorage.removeItem('token');
+        }
+      } catch (error) {
+        console.error('Token decoding error:', error);
+        localStorage.removeItem('token');
+      }
     }
   }, [navigate]);
 
   const handleLogin = (token) => {
     localStorage.setItem('token', token);
-    setIsLoggedIn(true);
     navigate('/dashboard');
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setIsLoggedIn(false);
     navigate('/');
   };
 
@@ -54,7 +64,7 @@ function App() {
           path="/dashboard"
           element={
             <PrivateRoute>
-              <Dashboard onLogout={handleLogout} />
+              <Dashboard userID={userID} onLogout={handleLogout} />
             </PrivateRoute>
           }
         />

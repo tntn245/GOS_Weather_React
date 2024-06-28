@@ -14,7 +14,7 @@ function Login({ onLogin }) {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/login', {
+      const response = await fetch('https://weatherweb-1s99.onrender.com/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ function Login({ onLogin }) {
     const token = credentialResponse?.credential;
     if (token) {
       axios
-        .post("http://localhost:5000/google-login", { token })
+        .post("https://weatherweb-1s99.onrender.com/google-login", { token })
         .then((response) => {
           const jwtToken = response.data.access_token;
           onLogin(jwtToken);  // Lưu JWT vào localStorage

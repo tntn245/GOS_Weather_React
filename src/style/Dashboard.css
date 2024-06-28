@@ -5,22 +5,8 @@ body {
 
 .dashboard {
   display: grid;
-  grid-template-rows: auto 1fr; /* Header và Content chiếm phần đầu và phần còn lại của trang */
+  grid-template-rows: auto 1fr; 
   height: 100vh; 
-}
-
-.header {
-  font-size: 24px;
-  color: white;
-  font-weight: bold; 
-  line-height:  inherit;
-  background-color: #5372F0; 
-  padding: 10px;
-  height: 10%;
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  text-align: center;
 }
 
 .content {
@@ -65,6 +51,43 @@ body {
   width: 100%;
   padding: 10px;
   background-color: #5372F0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-sizing: border-box; 
+}
+
+.input-container button[disabled] {
+  background-color: #b0bec5; /* Màu nút khi disable */
+  color: #666;
+  cursor: not-allowed;
+}
+
+.subscribe-container {
+  margin: 10px 0;
+  width: 100%;
+  box-sizing: border-box; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subscribe {
+  width: 40%;
+  padding: 10px;
+  background-color: #00cdb5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-sizing: border-box; 
+}
+
+.unsubscribe {
+  width: 40%;
+  padding: 10px;
+  background-color: #ca4c4c;
   color: white;
   border: none;
   border-radius: 4px;

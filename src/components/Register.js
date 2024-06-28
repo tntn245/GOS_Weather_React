@@ -31,7 +31,7 @@ function Register() {
       }
   
     try {
-      const response = await fetch('http://127.0.0.1:5000/checkEmail', {
+      const response = await fetch('https://weatherweb-1s99.onrender.com/checkEmail', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ function Register() {
 
   const handleVerifyOTP = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/verifyOTP', {
+      const response = await fetch('https://weatherweb-1s99.onrender.com/verifyOTP', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
