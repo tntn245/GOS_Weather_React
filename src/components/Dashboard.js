@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../style/Dashboard.css";
-import ProgressBar from "./ProgressBar";
 import Header from "./Header";
 import Modal from "react-modal";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -89,7 +88,7 @@ const Dashboard = ({ userID, onLogout }) => {
       console.error("Error subscribing:", error.message);
     } finally {
       setLoading(false);
-      alert("You will receive daily weather emails at 7 AM")
+      alert("You will receive daily weather emails every 12 hours")
     }
   };
 

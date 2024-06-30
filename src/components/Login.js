@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import Modal from "react-modal";
 import ClipLoader from "react-spinners/ClipLoader";
-import axios from "../api/axios.js";
+import { jwtDecode } from 'jwt-decode';
 import "../style/Login.css";
 
 function Login({ onLogin }) {
@@ -14,7 +14,8 @@ function Login({ onLogin }) {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     setLoading(true);
 
     try {
@@ -40,8 +41,6 @@ function Login({ onLogin }) {
     } catch (error) {
       console.error("Error:", error);
       setMessage("An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -49,20 +48,37 @@ function Login({ onLogin }) {
     navigate("/register");
   };
 
-  const handleGoogleLoginSuccess = (credentialResponse) => {
-    const token = credentialResponse?.credential;
-    if (token) {
-      axios
-        .post("https://weatherweb-1s99.onrender.com/google-login", { token })
-        .then((response) => {
-          const jwtToken = response.data.access_token;
-          onLogin(jwtToken); // Lưu JWT vào localStorage
+  const handleGoogleLoginSuccess = async(response) => {
+    var obj = jwtDecode(response.credential);    
+    var email = obj.email;
+    
+    if (email) {
+      try {
+        const response = await fetch(
+          "https://weatherweb-1s99.onrender.com/google-login",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email, obj }),
+          }
+        );
+
+        const data = await response.json();
+
+        if (response.status === 200) {
+          onLogin(data.access_token);
           navigate("/dashboard");
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
-    }
+        } else {
+          setMessage(data.message);
+        }
+      }
+      catch (error) {
+        console.error("Error:", error);
+        setMessage("An error occurred. Please try again.");
+      }
+    } 
   };
 
   return (
@@ -95,14 +111,14 @@ function Login({ onLogin }) {
           Register
         </button>
 
-        {/* <GoogleOAuthProvider clientId="826103606588-eqe5jffn43d1ge68f63bcnr1dld44lun.apps.googleusercontent.com">
+        <GoogleOAuthProvider clientId="826103606588-eqe5jffn43d1ge68f63bcnr1dld44lun.apps.googleusercontent.com">
         <GoogleLogin
           onSuccess={handleGoogleLoginSuccess}
           onError={() => {
             console.log("Login Failed");
           }}
         />
-      </GoogleOAuthProvider> */}
+      </GoogleOAuthProvider> 
       
       </div>
       
