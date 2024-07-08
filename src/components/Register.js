@@ -24,12 +24,10 @@ function Register() {
     setPasswordMatch(password === confirmPwd);
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+  const handleRegister = async () => {
     setOTPInput("");
     setMessage("");
     setShowOTPInput(false);
-    setLoading(true);
 
     if (!passwordMatch) {
       return;
@@ -56,9 +54,7 @@ function Register() {
     } catch (error) {
       console.error("Error:", error);
       setMessage("An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   const handleVerifyOTP = async () => {

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../style/Dashboard.css";
-import ProgressBar from "./ProgressBar";
 import Header from "./Header";
 import Modal from "react-modal";
 import ClipLoader from "react-spinners/ClipLoader";
