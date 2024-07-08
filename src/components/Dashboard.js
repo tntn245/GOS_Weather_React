@@ -63,7 +63,9 @@ const Dashboard = ({ userID, onLogout }) => {
     }
   };
 
-  const handleSubscribe = async () => {
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
@@ -89,7 +91,31 @@ const Dashboard = ({ userID, onLogout }) => {
       console.error("Error subscribing:", error.message);
     } finally {
       setLoading(false);
-      alert("You will receive daily weather emails at 7 AM")
+      alert("You will receive weather email")
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        "https://weatherweb-1s99.onrender.com/sendemail",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ position, userID }),
+        }
+      );
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      console.log("Subscription successful");
+    } catch (error) {
+      console.error("Error subscribing:", error.message);
     }
   };
 
@@ -178,7 +204,7 @@ const Dashboard = ({ userID, onLogout }) => {
               onClick={handleSubscribe}
               disabled={!forecastData}
             >
-              Subscribe
+              Receive email
             </button>
           </div>
         </div>

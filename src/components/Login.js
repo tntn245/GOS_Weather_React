@@ -14,7 +14,9 @@ function Login({ onLogin }) {
 
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e)  => {
+    e.preventDefault();
+
     setLoading(true);
 
     try {
